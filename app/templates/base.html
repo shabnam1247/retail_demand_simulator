@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        RetailIQ
+    </title>
+
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                R
+            </div>
+
+            <div>
+                Retail<span>IQ</span>
+            </div>
+
+        </div>
+
+        <div class="sidebar-title">
+            RETAIL INTELLIGENCE
+        </div>
+
+        <nav>
+
+            <a href="/">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+            <a href="/eda">
+                <span>◈</span>
+                EDA & Drivers
+            </a>
+
+            <a href="/segments">
+                <span>♙</span>
+                Customer Segments
+            </a>
+
+            <a href="/forecast">
+                <span>◫</span>
+                Demand Forecast
+            </a>
+
+            <a href="/inventory">
+                <span>▤</span>
+                Inventory Risk
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+
+            <div class="status-dot"></div>
+
+            Simulation Engine Online
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+
+                <div class="page-title">
+                    {% block page_title %}
+                    Retail Intelligence
+                    {% endblock %}
+                </div>
+
+                <div class="page-subtitle">
+                    Synthetic retail demand analytics
+                </div>
+
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="live-badge">
+                    <span></span>
+                    LIVE SIMULATION
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="content">
+
+            {% block content %}
+
+            {% endblock %}
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+</body>
+
+</html>

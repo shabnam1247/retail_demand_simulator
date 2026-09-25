@@ -1,0 +1,299 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Executive Dashboard
+{% endblock %}
+
+
+{% block content %}
+
+<div class="welcome">
+
+    <div>
+
+        <h1>
+            Retail Demand Intelligence
+        </h1>
+
+        <p>
+            Monitor sales, customer behavior,
+            demand patterns and inventory risk.
+        </p>
+
+    </div>
+
+    <button
+        class="primary-btn"
+        onclick="loadDashboard()"
+    >
+        ↻ Refresh Analytics
+    </button>
+
+</div>
+
+
+<!-- KPI -->
+
+<div class="kpi-grid">
+
+    <div class="kpi-card">
+
+        <div class="kpi-icon blue">
+            ₹
+        </div>
+
+        <div>
+
+            <div class="kpi-label">
+                TOTAL REVENUE
+            </div>
+
+            <div class="kpi-value">
+                ₹{{ "{:,.0f}".format(kpi.revenue) }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="kpi-card">
+
+        <div class="kpi-icon purple">
+            #
+        </div>
+
+        <div>
+
+            <div class="kpi-label">
+                UNITS SOLD
+            </div>
+
+            <div class="kpi-value">
+                {{ "{:,}".format(kpi.units) }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="kpi-card">
+
+        <div class="kpi-icon green">
+            %
+        </div>
+
+        <div>
+
+            <div class="kpi-label">
+                TOTAL PROFIT
+            </div>
+
+            <div class="kpi-value">
+                ₹{{ "{:,.0f}".format(kpi.profit) }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="kpi-card">
+
+        <div class="kpi-icon orange">
+            !
+        </div>
+
+        <div>
+
+            <div class="kpi-label">
+                STOCKOUT EVENTS
+            </div>
+
+            <div class="kpi-value">
+                {{ "{:,}".format(kpi.stockouts) }}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- CHART GRID -->
+
+<div class="dashboard-grid">
+
+
+    <!-- REVENUE -->
+
+    <div class="chart-card large">
+
+        <div class="chart-header">
+
+            <div>
+
+                <h3>
+                    Revenue Trend
+                </h3>
+
+                <p>
+                    Monthly revenue performance
+                </p>
+
+            </div>
+
+        </div>
+
+        <div
+            id="revenueChart"
+            class="plot"
+        ></div>
+
+    </div>
+
+
+    <!-- SEGMENTS -->
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <div>
+
+                <h3>
+                    Customer Segments
+                </h3>
+
+                <p>
+                    Customer value distribution
+                </p>
+
+            </div>
+
+        </div>
+
+        <div
+            id="segmentChart"
+            class="plot"
+        ></div>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <div>
+
+                <h3>
+                    Top Products
+                </h3>
+
+                <p>
+                    Revenue contribution
+                </p>
+
+            </div>
+
+        </div>
+
+        <div
+            id="productChart"
+            class="plot"
+        ></div>
+
+    </div>
+
+
+    <!-- WEATHER -->
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <div>
+
+                <h3>
+                    Weather Impact
+                </h3>
+
+                <p>
+                    Units by weather condition
+                </p>
+
+            </div>
+
+        </div>
+
+        <div
+            id="weatherChart"
+            class="plot"
+        ></div>
+
+    </div>
+
+
+    <!-- PROMOTION -->
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <div>
+
+                <h3>
+                    Promotion Effect
+                </h3>
+
+                <p>
+                    Promotional demand response
+                </p>
+
+            </div>
+
+        </div>
+
+        <div
+            id="promotionChart"
+            class="plot"
+        ></div>
+
+    </div>
+
+
+    <!-- CATEGORY -->
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <div>
+
+                <h3>
+                    Category Revenue
+                </h3>
+
+                <p>
+                    Revenue by product category
+                </p>
+
+            </div>
+
+        </div>
+
+        <div
+            id="categoryChart"
+            class="plot"
+        ></div>
+
+    </div>
+
+</div>
+
+{% endblock %}

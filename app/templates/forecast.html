@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Demand Forecast
+{% endblock %}
+
+
+{% block content %}
+
+<div class="welcome">
+
+    <div>
+
+        <h1>
+            Demand Forecasting
+        </h1>
+
+        <p>
+            ML-powered demand forecasting using
+            historical, promotional, price,
+            weather and calendar features.
+        </p>
+
+    </div>
+
+    <button
+        class="primary-btn"
+        onclick="generateForecast()"
+    >
+        Generate Forecast
+    </button>
+
+</div>
+
+
+<div class="forecast-grid">
+
+
+    <div class="forecast-card">
+
+        <div class="forecast-icon">
+            AI
+        </div>
+
+        <h2>
+            Gradient Boosting
+        </h2>
+
+        <p>
+            Demand prediction model using
+            lag and rolling demand features.
+        </p>
+
+    </div>
+
+
+    <div class="forecast-card">
+
+        <div class="forecast-icon">
+            7D
+        </div>
+
+        <h2>
+            Rolling Demand
+        </h2>
+
+        <p>
+            7-day and 28-day demand patterns
+            are included in the model.
+        </p>
+
+    </div>
+
+
+    <div class="forecast-card">
+
+        <div class="forecast-icon">
+            ML
+        </div>
+
+        <h2>
+            Price & Promotion
+        </h2>
+
+        <p>
+            Price gap and promotional activity
+            influence predicted demand.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="forecast-result">
+
+    <div>
+
+        <div class="result-label">
+            NEXT-DAY FORECAST
+        </div>
+
+        <div
+            id="forecastValue"
+            class="forecast-number"
+        >
+            —
+        </div>
+
+        <div
+            id="forecastDetails"
+            class="muted"
+        >
+            Click Generate Forecast
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="table-card">
+
+    <div class="chart-header">
+
+        <div>
+
+            <h3>
+                Model Performance
+            </h3>
+
+            <p>
+                Holdout test-set metrics
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Metric
+                </th>
+
+                <th>
+                    Value
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for metric in metrics %}
+
+            <tr>
+
+                <td>
+                    {{ metric.metric }}
+                </td>
+
+                <td>
+                    {{ "%.4f"|format(metric.value) }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<script>
+
+async function generateForecast() {
+
+    const button =
+        document.querySelector(
+            ".primary-btn"
+        );
+
+    button.innerText =
+        "Generating...";
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/forecast",
+                {
+                    method: "POST"
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (data.error) {
+
+            alert(
+                data.error
+            );
+
+            return;
+        }
+
+        document
+            .getElementById(
+                "forecastValue"
+            )
+            .innerText =
+            data.forecast_units +
+            " units";
+
+        document
+            .getElementById(
+                "forecastDetails"
+            )
+            .innerText =
+            data.forecast_date +
+            " • Store " +
+            data.store +
+            " • Product " +
+            data.product;
+
+    }
+
+    catch (error) {
+
+        alert(
+            "Forecast request failed."
+        );
+
+    }
+
+    finally {
+
+        button.innerText =
+            "Generate Forecast";
+    }
+}
+
+</script>
+
+{% endblock %}

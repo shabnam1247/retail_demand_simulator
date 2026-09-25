@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Customer Segmentation
+{% endblock %}
+
+
+{% block content %}
+
+<div class="welcome">
+
+    <div>
+
+        <h1>
+            Customer Intelligence
+        </h1>
+
+        <p>
+            RFM-style behavioral segmentation
+            using KMeans clustering.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="dashboard-grid">
+
+    <div class="chart-card large">
+
+        <div class="chart-header">
+
+            <div>
+
+                <h3>
+                    Customer Segment Distribution
+                </h3>
+
+                <p>
+                    Customer value groups
+                </p>
+
+            </div>
+
+        </div>
+
+        <div
+            id="segmentDistribution"
+            class="plot"
+        ></div>
+
+    </div>
+
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <h3>
+                Segmentation Method
+            </h3>
+
+        </div>
+
+        <div class="method-box">
+
+            <div>
+                <strong>
+                    Frequency
+                </strong>
+
+                <span>
+                    Number of purchases
+                </span>
+            </div>
+
+            <div>
+                <strong>
+                    Monetary
+                </strong>
+
+                <span>
+                    Customer revenue
+                </span>
+            </div>
+
+            <div>
+                <strong>
+                    Units
+                </strong>
+
+                <span>
+                    Products purchased
+                </span>
+            </div>
+
+            <div>
+                <strong>
+                    Discount
+                </strong>
+
+                <span>
+                    Discount sensitivity
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="table-card">
+
+    <div class="chart-header">
+
+        <div>
+
+            <h3>
+                Customer Sample
+            </h3>
+
+            <p>
+                Segmented customer records
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Customer
+                    </th>
+
+                    <th>
+                        City
+                    </th>
+
+                    <th>
+                        Loyalty
+                    </th>
+
+                    <th>
+                        Frequency
+                    </th>
+
+                    <th>
+                        Revenue
+                    </th>
+
+                    <th>
+                        Segment
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for row in rows %}
+
+                <tr>
+
+                    <td>
+                        {{ row.customer_id }}
+                    </td>
+
+                    <td>
+                        {{ row.city }}
+                    </td>
+
+                    <td>
+                        {{ row.loyalty_tier }}
+                    </td>
+
+                    <td>
+                        {{ row.frequency|default(0)|round(0) }}
+                    </td>
+
+                    <td>
+                        ₹{{ "{:,.0f}".format(
+                            row.monetary|default(0)
+                        ) }}
+                    </td>
+
+                    <td>
+
+                        <span class="segment-pill">
+                            {{ row.segment }}
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<script>
+
+async function loadSegments() {
+
+    const response =
+        await fetch("/api/summary");
+
+    const data =
+        await response.json();
+
+    Plotly.newPlot(
+        "segmentDistribution",
+
+        [
+            {
+                labels:
+                    data.segments.map(
+                        x => x.segment
+                    ),
+
+                values:
+                    data.segments.map(
+                        x => x.customers
+                    ),
+
+                type: "pie",
+
+                hole: 0.55
+            }
+        ],
+
+        chartLayout(
+            "Customer Segment Mix"
+        )
+    );
+}
+
+loadSegments();
+
+</script>
+
+{% endblock %}

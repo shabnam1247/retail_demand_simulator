@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Inventory Risk
+{% endblock %}
+
+
+{% block content %}
+
+<div class="welcome">
+
+    <div>
+
+        <h1>
+            Inventory Intelligence
+        </h1>
+
+        <p>
+            Identify products and stores with
+            high stockout exposure.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="risk-grid">
+
+    <div class="risk-card high">
+
+        <div class="risk-number">
+
+            {{
+                rows
+                | selectattr(
+                    "risk",
+                    "equalto",
+                    "High"
+                )
+                | list
+                | length
+            }}
+
+        </div>
+
+        <div>
+            High Risk
+        </div>
+
+    </div>
+
+
+    <div class="risk-card medium">
+
+        <div class="risk-number">
+
+            {{
+                rows
+                | selectattr(
+                    "risk",
+                    "equalto",
+                    "Medium"
+                )
+                | list
+                | length
+            }}
+
+        </div>
+
+        <div>
+            Medium Risk
+        </div>
+
+    </div>
+
+
+    <div class="risk-card low">
+
+        <div class="risk-number">
+
+            {{
+                rows
+                | selectattr(
+                    "risk",
+                    "equalto",
+                    "Low"
+                )
+                | list
+                | length
+            }}
+
+        </div>
+
+        <div>
+            Low Risk
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="table-card">
+
+    <div class="chart-header">
+
+        <div>
+
+            <h3>
+                Inventory Risk Register
+            </h3>
+
+            <p>
+                Store-product stockout analysis
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Store
+                    </th>
+
+                    <th>
+                        Product
+                    </th>
+
+                    <th>
+                        Avg Daily Demand
+                    </th>
+
+                    <th>
+                        Stockout Days
+                    </th>
+
+                    <th>
+                        Avg Inventory
+                    </th>
+
+                    <th>
+                        Stockout Rate
+                    </th>
+
+                    <th>
+                        Risk
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for row in rows %}
+
+                <tr>
+
+                    <td>
+                        {{ row.store_id }}
+                    </td>
+
+                    <td>
+                        {{ row.product_id }}
+                    </td>
+
+                    <td>
+                        {{ "%.2f"|format(
+                            row.average_daily_demand
+                        ) }}
+                    </td>
+
+                    <td>
+                        {{ row.stockout_days }}
+                    </td>
+
+                    <td>
+                        {{ "%.2f"|format(
+                            row.average_inventory
+                        ) }}
+                    </td>
+
+                    <td>
+                        {{ "%.1f"|format(
+                            row.stockout_rate * 100
+                        ) }}%
+                    </td>
+
+                    <td>
+
+                        {% if row.risk == "High" %}
+
+                        <span class="risk-pill high-pill">
+                            HIGH
+                        </span>
+
+                        {% elif row.risk == "Medium" %}
+
+                        <span class="risk-pill medium-pill">
+                            MEDIUM
+                        </span>
+
+                        {% else %}
+
+                        <span class="risk-pill low-pill">
+                            LOW
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

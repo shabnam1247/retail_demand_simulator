@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+EDA & Demand Drivers
+{% endblock %}
+
+
+{% block content %}
+
+<div class="welcome">
+
+    <div>
+
+        <h1>
+            Exploratory Data Analysis
+        </h1>
+
+        <p>
+            Understand the factors driving
+            retail demand.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="dashboard-grid">
+
+    <div class="chart-card large">
+
+        <div class="chart-header">
+
+            <div>
+
+                <h3>
+                    Monthly Demand
+                </h3>
+
+                <p>
+                    Historical unit demand
+                </p>
+
+            </div>
+
+        </div>
+
+        <div
+            id="edaDemand"
+            class="plot"
+        ></div>
+
+    </div>
+
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <div>
+
+                <h3>
+                    Promotion Impact
+                </h3>
+
+                <p>
+                    Average demand with promotions
+                </p>
+
+            </div>
+
+        </div>
+
+        <div
+            id="edaPromotion"
+            class="plot"
+        ></div>
+
+    </div>
+
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <div>
+
+                <h3>
+                    Weather Impact
+                </h3>
+
+            </div>
+
+        </div>
+
+        <div
+            id="edaWeather"
+            class="plot"
+        ></div>
+
+    </div>
+
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <div>
+
+                <h3>
+                    Festival Demand
+                </h3>
+
+            </div>
+
+        </div>
+
+        <div
+            id="edaFestival"
+            class="plot"
+        ></div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function loadEDA() {
+
+    const response =
+        await fetch("/api/summary");
+
+    const data =
+        await response.json();
+
+
+    Plotly.newPlot(
+        "edaDemand",
+
+        [
+            {
+                x: data.monthly.map(
+                    x => x.month
+                ),
+
+                y: data.monthly.map(
+                    x => x.units
+                ),
+
+                type: "scatter",
+
+                mode: "lines+markers"
+            }
+        ],
+
+        chartLayout(
+            "Monthly Unit Demand"
+        )
+    );
+
+
+    Plotly.newPlot(
+        "edaPromotion",
+
+        [
+            {
+                x: data.promotion.map(
+                    x => x.promotion == 1
+                        ? "Promotion"
+                        : "No Promotion"
+                ),
+
+                y: data.promotion.map(
+                    x => x.avg_units
+                ),
+
+                type: "bar"
+            }
+        ],
+
+        chartLayout(
+            "Promotion vs Average Units"
+        )
+    );
+
+
+    Plotly.newPlot(
+        "edaWeather",
+
+        [
+            {
+                x: data.weather.map(
+                    x => x.weather
+                ),
+
+                y: data.weather.map(
+                    x => x.units
+                ),
+
+                type: "bar"
+            }
+        ],
+
+        chartLayout(
+            "Weather vs Units Sold"
+        )
+    );
+
+
+    Plotly.newPlot(
+        "edaFestival",
+
+        [
+            {
+                x: data.festival.map(
+                    x => x.festival
+                ),
+
+                y: data.festival.map(
+                    x => x.units
+                ),
+
+                type: "bar"
+            }
+        ],
+
+        chartLayout(
+            "Festival Demand"
+        )
+    );
+
+}
+
+loadEDA();
+
+</script>
+
+{% endblock %}

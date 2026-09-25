@@ -1,0 +1,21 @@
+product_id,brand,product_name,category,price_band,base_price,margin_rate,demand_index
+P001,Samsung,Galaxy A15,Smartphone,Budget,22000,0.28,1.3
+P002,Samsung,Galaxy S24 FE,Smartphone,Premium,59000,0.2,0.9
+P003,Apple,iPhone 15,Smartphone,Premium,69900,0.18,0.85
+P004,Apple,iPhone 15 Pro,Smartphone,Premium,129900,0.16,0.55
+P005,OnePlus,Nord CE 4,Smartphone,Midrange,24999,0.22,1.2
+P006,OnePlus,12R,Smartphone,Premium,39999,0.2,1.0
+P007,Xiaomi,Redmi Note 14,Smartphone,Budget,17999,0.26,1.4
+P008,Realme,12 Pro,Smartphone,Midrange,24999,0.25,1.15
+P009,Vivo,V30,Smartphone,Midrange,33999,0.22,1.0
+P010,Oppo,Reno 12,Smartphone,Midrange,32999,0.22,0.95
+P011,boAt,Airdopes 141,Audio,Budget,1299,0.35,2.3
+P012,Sony,WH-CH520,Audio,Midrange,4490,0.25,1.4
+P013,JBL,Tune 770NC,Audio,Midrange,6999,0.23,1.2
+P014,Samsung,Galaxy Buds FE,Audio,Midrange,7999,0.2,1.1
+P015,Apple,AirPods 3,Audio,Premium,19900,0.18,0.7
+P016,Samsung,25W Charger,Accessories,Budget,1499,0.32,2.5
+P017,Anker,PowerCore 20K,Accessories,Midrange,3999,0.27,1.7
+P018,Spigen,Phone Case,Accessories,Budget,1499,0.38,2.8
+P019,Apple,20W Adapter,Accessories,Midrange,1900,0.28,1.9
+P020,Samsung,Galaxy Tab A9,Tablet,Midrange,17999,0.22,0.7
